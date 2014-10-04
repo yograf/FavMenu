@@ -71,19 +71,4 @@ FavMenu supports Total Commander's pseudo variables, such as `$DESKTOP`,
 `$PERSONAL`, refer `Includes/pseudo.ahk` for detailed info.
 
 
-## Similar software ##
-
-* FolderMenu http://foldermenu.sourceforge.net/
-  * pros: easy to add simple applications (which has a editable address bar); 
-  you can have another menu besides TC's hot dirs; open source; written in AutoIt
-  (which is very much like VBscript, syntax is not so weired as AutoHotKey)
-  * cons: some concepts are a little anonying, such as menu 1, 2 & 1.5; 
-  although open source, source code can't be successfuly built.
-* FlashFolder http://flashfolder.sourceforge.net/
-  * pros: 
-  * cons: only system dialogs supported; windows vista & 7+ not supported; you need administrator privilege to install it
-* Listary
-  * pros: it has more features
-  * cons: not open source
-* Direct Folders http://codesector.com/directfolders
  
