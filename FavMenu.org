@@ -1,0 +1,426 @@
+#+OPTIONS: toc:t
+
+* FavMenu & Menu Editor
+
+	for Windows XP & 2K
+
+
+** OVERVIEW
+
+FavMenu is Windows OS enhancer and application launcher. It stores information about your favorite
+folders and executables and let you quickly use your favorites within system dialogs (Open/Save,
+Browse For Folder, Office2003 dialogs), Console (cmd.exe), Widows Explorer and Total Commander.
+
+Format of the menu configuration file is compatibile with the Total Commander file manager directory
+menu, and was originaly written to work as addon for this file manager. Almost all features of the
+TC directory menu are supported, including plugins and pseudovariables. Furthermore, TC doesn¡¯t
+need to be started.  If you don¡¯t use Total Commander Favmenu can be set to work with Windows
+Explorer. This option will be automatically offered on first start-up if TC is not detected.
+
+Menu Editor can be used to create, edit, delete and organise menu items. This is also complete
+replacement of TC¡¯s internal directory menu editor witch adds many new options. It can be used
+together with FavMenu or separate.
+
+Both programs use the same ini file to store configuration, =Config.ini=.
+
+You can see Favmenu screenshots [[http://www.r-moth.com/code/Favmenu/Screenshots.html][here]] and all supported dialogs [[http://www.r-moth.com/code/Favmenu/Dialogs.html][here]].
+
+
+** INSTALLATION
+
+You can run applications either by starting .exe or .ahk files. To run .ahk, you must have
+[[http://www.autohotkey.com][AutoHotKey]] installed.  If you choose to run exe versions you can safely delete =*.ahk= files and
+=\include= folder.
+
+If you want Total Commander executable and its configuration file wincmd.ini to be automaticaly
+recognised start FavMenu from within TC (not required if you installed TC normally or you have
+COMMANDER_PATH environment variable set in the system).  Make sure you have something in the TC
+directory menu before start using the program.
+
+
+** FAVMENU  FEATURES
+
+
+- Favmenu supports several types of menu items.  Possible menu items are ( full TC compatibility):
+
+    | MENU ITEM TYPE | COMMAND           | EXAMPLES                                                          |
+    |----------------+-------------------+-------------------------------------------------------------------|
+    | PATH           | cd path           | cd c:\program files     cd %SYSTEMROOT%\System32                  |
+    | TC PLUGIN      | cd \\\plugin      | cd \\\Uninstaller       cd \\\Registry\HKEY_CURRENT_USER\Sofware  |
+    | PSEUDOVARIABLE | cd %$var%\path    | cd %$DESKTOP%   cd %$PERSONAL%\My Pictures                        |
+    | EXECUTABLE     | path_to_exectable | %$WINDOWS%\System32\Notepad.exe                                   |
+    |                |                   | c:\boot.ini       /will be resolved via associations/             |
+    |                |                   | %w%%s%%n%         /where w=C:\windows s=\system32  n=notepad.exe/ |
+    |                |                   | %UTILS%\Edit Plus\Editplus.exe "c:\boot.ini" "c:\1.txt"           |
+    
+
+- Enter (on menu item)
+
+  If
+  * Open/Save, Browse For Folder or Office2003 dialog  is  active :
+	     
+    | SELECTION  | ACTION                        |
+    |------------+-------------------------------|
+    | PATH       | change the path in the dialog |
+    | TC PLUGIN  | open or activate TC           |
+    | EXECUTABLE | run the application or file   |
+
+  * Console window is active :: change the current directory if path is selected or execute
+       application / dos command
+  * Any other window is active :: open or activate file manager for folders, launch an executable
+    otherwise.
+
+
+- CTRL + Enter (on menu item)
+
+  Open Properties dialog with selected item. You can move around with buttons or you can use CTRL
+  left & right arrow. You can change title, command and set icon.  Press Save on every individual
+  item to save changes (title will change to notify you that save is complete).  It is much faster
+  to use this dialog then TC's editor for single item change.
+
+  If Properties dialog is open you can use Favmenu to change the currently displayed item by calling
+  the menu and pressing <ENTER>. So favmenu can not be used until Properties dialog is closed.
+
+- SHIFT + Enter (on menu item)
+
+  Open selected item in new TC tab
+
+- CTRL + SHIFT + Enter (on menu item)
+
+  Send path of the selected item to the active window. 
+
+- Setup dialog
+
+  On first run, Setup dialog will search for TC location in the registry and if not found it will
+  also try %COMMANDER_PATH% environment variable ( if not present in the system, this variable will
+  be instantiated by TC privately) If setup can not find Total Commander it will use Windows
+  Explorer as file manager. The default (sample) menu will be also created (menu.ini)
+
+  If Favmenu didn¡¯t find your Total Commander, specify full paths to totalcmd.exe and wincmd.ini
+  yourself.  In case you want to start TC with parameters, create link to the totalcmd.exe and edit
+  link info as you desire. After that specify the path to the totalcmd.lnk instead totalcmd.exe.
+
+  You can use environment variables to specify exe & ini location.
+
+  You can later call this Setup dialog via the tray menu.
+
+- Current directories,   Editor  &   ¡°Add current dir¡±  items
+
+  If Total Ccommander is open, current left & right folders will be displayed at first 2
+  positions. If they are the same only 1 will be visible.  If menu is called with TC active, this
+  will not be displayed. You can use those items to fastly switch folders in dialogs to folders you
+  carently use.
+
+  Add current dir item works NOT only if TC is active. It is also supported in all system dialogs
+  (except Office) and in Console. This will surely work for all hard disk folders but you may have
+  problems with so called virtual folders since many of them don¡¯t have physical representation on
+  the hard disk. You can¡¯t use Desktop folders for now, but that may be added in the future.
+
+  Configure¡­ item (Editor) can also be set as a last item in the menu. This method is preferable to
+  set the Editor, since you will not have double configuration enteries when using TCs original
+  directory menu, because this item is not contained in the menu declaration. This also ensures that
+  this item is always last in the menu.
+	
+  All 3 special items can be enabled/disabled via Setup dialog.
+
+- Automatic Refresh
+
+  Menu is refreshed on every call, so if you update your favorites in TC changes will be seen
+  immediately.
+
+- Office Dialogs
+
+  Solid support to Office 2003 Open/Save dialogs (it doesn't work if ListView is focused) Make sure
+  your carret is in the edit box next to the File Name and you will not have any problems.
+
+- Console Support
+
+  If cmd.exe is active window selecting path from FavMenu will change the path in the command
+  line. If you select executable from the menu, it will be typed on the command line and
+  executed. This allows console commands and applications to be added to the FavMenu.  For instance,
+  you can create menu item: =dir /b | sort= 
+
+  Menu items pointing to console commands (not applications) are NOT compatibile with Total
+  Commander. If you need to run original TC directory menu, you will not be able to execute them.
+
+  If you want to run executables with long file names in console, you must use quotes. This is not
+  required for non-console usage.
+
+  If you want to edit the line before posting it, you can use CTRL SHIFT ENTER.
+
+  You can NOT run console commands from the system, only if console window is active. It is pretty
+  pointless to run them from the system, since they are executed in the context of the current
+  command line directory. The above command can be executed from the system by changing it to: =cmd
+  /K dir /b | sort=
+
+  In Setup->Integration tab you can set custom command to be executed after the directory is
+  open. The default is set to dir /w /oGN so you are able to see contents of the folder after you
+  change to it. You can change this to whatever you like (note that errors here will not be
+  detected). If you want to display the folder in empty console window you can change this entery to
+  cls & dir /w /oGN
+
+- Icons 
+
+  You can specify an icon to display beside menu item. Icons are 12x12 with first pixel holding
+  transparent color. You have more then 100 icons included in the package for you private use. Use
+  relative path names when setting icons if you want them to be portable.
+
+- Pseudovariables
+
+  Similar to environement variables, but has slightly different syntax (%$var%, instead %var%).
+  Currently supported:
+	
+
+    | PSEUDOVARIABLE       | TYPICAL LOCATION                                                |
+    |----------------------+-----------------------------------------------------------------|
+    | APPDATA              | Application Data                                                |
+    | COMMON_APPDATA       | All Users\Application Data                                      |
+    | COMMON_DOCUMENTS     | All Users\Documents                                             |
+    | DESKTOP              | C:\Documents and Settings\username\Desktop                      |
+    | FONTS                | C:\Windows\Fonts                                                |
+    | LOCAL_APPDATA        | Non roaming, user\Local Settings\Application Data               |
+    | MYMUSIC              | My Music folder                                                 |
+    | MYPICTURES           | My Pictures                                                     |
+    | PERSONAL             | My Documents                                                    |
+    | PROGRAM_FILES_COMMON | C:\Program Files\Common                                         |
+    | PROGRAM_FILES        | C:\Program Files                                                |
+    | PROGRAMS             | C:\Documents and Settings\username\Start Menu\Programs          |
+    | RESOURCES            | %windir%\Resources\, For theme and other windows resources.     |
+    | STARTMENU            | C:\Documents and Settings\username\Start Menu                   |
+    | STARTUP              | C:\Documents and Settings\username\Start Menu\Programs\Startup. |
+    | SYSTEM               | System Directory (usualy C:\WINDOWS\System32)                   |
+    | WINDOWS              | Windows Directory (usualy c:\Windows)                           |
+        
+  TC NOTE: Not all above pseudovariables are currently supported but they may be in the future versions.
+
+
+** MENU EDITOR FEATURES
+
+Menu Editor is separate application that can be used to edit & organise the menu. If you already
+have Config.ini created by FavMenu it will use existing configuration. If you don¡¯t use FavMenu,
+Menu Editor will try to find wincmd.ini or ask you on failure.
+
+Although you can use other available TC editors together with Favmenu it is not recommended since
+they are not aware of the icons. This connection may be even havier in the future.
+
+If you want to edit single item the fastest way is to use FavMenu¡¯s itegrated Properties dialog
+(CTRL ENTER).  Editor can be added at the end of the Favmenu menu via its Setup dialog.
+
+- SHIFT Up/Down 
+
+  Move an item, or entire submenu. 
+
+  While moving, when you encounter submenu, if it is expanded, current item will become its child or
+  will be removed from it.  Otherwise, item will jump over the submenu.
+
+- F2
+
+  Change the title of an item. Use & to set a shortcut and ¨C to specify separator.
+
+- ENTER
+
+  This key will redirect you to the next editable field for current item.
+
+- INSERT | SHIFT INSERT
+
+  Press insert to add new menu item after currently selected. Hold shift to insert new submenu.
+
+  When the last item of the submenu is deleted, submenu will be turned to simple menu item. 
+
+- DELETE
+
+  Remove the item or complete submenu.
+
+- Browse buttons
+
+  >> buttons can be used to speed up editing.
+
+  If the first word in the command field is ¡°cd¡±, browse for directory dialog will be displayed,
+  otherwise, browse for file. You must still press ENTER to save changes.
+  
+- Settings
+
+  If settings tab in Menu Editor is hidden, use CTRL TAB to select it. You can change the look and
+  behavior of the editor here.
+
+*** NOTES
+
+You may encounter some problems related to Total Commander interaction with the menu. It is the best
+to avoid using TC editor at all, since FavMenu Editor is much faster and functional plus TC editor
+will delete menu information about your icons if you set them. You can use ¡°Add current dir¡± TC
+option without any problems.
+
+- If you have empty sub menus, script will not work.
+
+- If you have 2 submenu items with the same name, in order to see the second one, you must add
+  pseudospace (ALT 0160) at the end of the title of the second one. For all subsequent items with
+  the same name add additional pseudospace. Having enteries with the same name in the same submenu
+  will present some bugs with icons if you use them.
+
+- Menu is collected from the wincmd.ini [DirMenu] section. Format of this menu is:
+
+#+begin_example
+	  menuN =  title | - | -title | -- 
+	  cmdN  =  cd <path|plugin|pseudovarialbe> | executable
+#+end_example
+	  
+  While building the menu, section will be iterated sequentially up to the first menuX item that
+  doesn't exist. If, for some reason, your TC menu has "hole" in a sequence, script will rise errors
+  or will not display the complete menu.  This menu, for instance will not work:
+
+#+begin_example
+	  [DirMenu]
+	  menu1=item1
+	  menu2=item2
+	  menu4=item3
+#+end_example
+
+  To make sure your menu is not messed-up, open TC Favorites configuration and click OK button. TC
+  will rebuild the menu sequentially. If you still have problems, delete everything (backup
+  wincmd.ini first) and create your menu again. And if you still have problems (very unlikely),
+  visit developing forum to report this. If you have any other mistakes in menu syntax script will
+  not work.
+
+- Win9x systems are not and will not be tested. If it works, cool, but if not,  don't ask for support.
+
+- You can setup Win key shortcuts by manualy editing Config.ini : Edit =tcKey= value in =TCFavMenu=
+  section. U can set =Lwin= or =Rwin= or #letter.
+
+  Example: 
+    * =#A= - shortcut definition for Win + A so entery in Config.ini should be in this case: =tcKey\=#a= 
+    * =Lwin= - shortcut definition for solo left Windows key
+
+- You can set hotkey for famenu to be mouse button by editing configuration file.  Set tcKey in
+  TCFavMenu section to Mbutton or Rbutton as desired
+
+- Total Commander compatibility issues:
+  
+  FTP and internal commands in menu supported by TC are not currently supported by Favmenu.  Target
+  field supported by TC is not currently supported by Favmenu (seems nobody need this)
+
+** SCRIPT MERGING
+
+If you are AutoHotKey user, you can include Favmenu and Editor in you own scripts.
+This is an example:
+
+#+begin_example
+
+	g := 1
+	SetWorkingDir <path to Favmenu>
+	g := FavMenu_Init(g, "FavMenuSubmenu", false)
+	g := Editor_Init(g, ¡°¡±, false)
+
+	Menu, Tray, Add, FavMenu :FavMenuSubmenu
+Return
+
+
+#Include <path to Favmenu & Editor>
+#Include FavMenu.ahk
+#Include Editor.ahk
+#+end_example
+
+Init functions must be called in your autorun section to initialise scripts. Parameters are:
+
+  * ByRef Param1 :: last GUI number used. This is automatically, just set the g to 1 and add g as a
+                    first parameter in every next Init function call. Function will return new gui
+                    number incremented with the count of GUIs used in the script
+  * Tray submenu :: Since you can run several scripts together, you set here the Tray submenu that
+                   	script will use for its own menu enteries. After that, add it in the tray with
+                   	the Menu command. If you leave this parameter empty, the menu will be added to
+                   	the Tray itself.  
+  * Standalone :: Set this to false. This flag notifies the script that it is not used standalone
+                   	but as a part of merged environment.
+
+From this point you can use following functions:
+
+#+begin_example
+		FavMenu_Create()		Show the FavMenu. 
+		Editor_Run()			Starts the editor	
+		
+		FavMenu_Options_*		set ini option, replace * with ini value from [TCFavMenu] section
+		Editor_Options_*		set ini option, replace * with ini value from [Editor] section
+#+end_example
+	
+For instance, this will set Win + P to show FavMenu at the mouse position and Win + N to show the Editor:
+
+#+begin_example
+
+	#p:
+		t := FavMenu_Options_MenuPos		;save current option
+		FavMenu_Options_MenuPos := 1		;mouse postion
+		FavMenu_Create()				;show the menu
+		FavMenu_Options_MenuPos := t		;restore saved option
+	Return
+
+	#n:
+		Editor_Run()
+	return
+				
+#+end_example
+
+If you want to know more about script merging see my article:
+[[http://www.r-moth.com/code/Autohotkey_Article.htm][Autohotkey: Constructive Language Criticism & Script Merging]]
+	
+	
+** HISTORY:
+
+*** V2.0 (18. September 2006)
+- Added support for Browse For Folders dialogs (might need administrator privilegies)
+- Added support for Console ( internal console commands are also supported ).
+- Added support for Windows Explorer (you can use it also as a File Manager instead of Total
+  Commander)
+- Added left click on the tray icon to launch FavMenu from the tray.
+- Clicking on tray icon will not steal current focus. This means that you can use Favmenu within
+  supported windows via the tray icon.
+- Added custom tray icons for enabled and dissabled state. You can change them in res folder.
+- Enhaced ¡°Add current directory¡± feature:
+	+ Now supports Browse For Folders, Windows Explorer and Console.
+	+ Full functionality in Open/Save standard dialogs: support for all folders including virtual
+		folders with physical representation.  (Desktop, My Picture, My Documents, Recent
+		Documents¡­)
+	+ Dialog is now of dynamic width: the path recognised will always fit except if it is too long
+- Added Help tray menu item
+- Properties: Added ¡°change item¡± button.  Click on it to select next item to edit, via FavMenu.
+- Properties: Added ENTER key handling. Pressing it will switch focus to next item parameter.
+- Setup: New options ¨C integration tab ¨C select where do you want Favmenu to appear.
+- Setup: Added button to create sample menu.
+- Editor: changed Enter key behavior - it is no longer needed in Editor to press Enter on every
+  changed item.
+- Items are saved per keypress. Everything is saved after Save button is pressed.
+
+
+*** V1.1 (21. Avgust 2006) 
+- Add current directory is available in dialogs also (except Office dialogs). Previous version had
+  this item only if TC was active. It will surely work for hard disk folders and My Documents
+  virtual folder. It doesn¡¯t work for Desktop.
+- CTRL SHIFT ENTER on menu item will paste that item in active window.
+- Dialog handling improvements and bug fixes. Sometimes you could get redirected to TC when using
+  Favmenu in dialogs without a reason.
+- Added Total Commander hook to ¡°Current Directory¡± header: double click on it will open Favmenu
+  preventing original TC menu. [*] button is not hooked.
+- Properties: when open, using FavMenu will switch the Properties view to that item thus making
+  editing of particular item much faster.
+
+
+
+** TO DO
+- Smart refreshing (menu is now refreshed on every call witch is slow for menus with 150+ items,
+  depending on computer speed).  Highest priority.
+- FTP user name & password in menu command.
+- TC internal commands (like cm_opendrives etc..)
+- Command line option: specify configuration file to use for both applications.
+- Hook for * button in TC
+- Icon for famenu within dialogs
+- Large icons
+	
+** ABOUT
+
+Created by Miodrag Milic 
+in AutoHotKey <www.autohotkey.com>
+using Windows XP Pro
+
+
+e-mail: 	miodrag.milic@gmail.com
+homepage:   code.r-moth.com  |  www.r-moth.com   |  r-moth.deviantart.com
+
+Belgrade, Jun 2006
