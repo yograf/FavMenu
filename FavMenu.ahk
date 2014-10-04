@@ -55,7 +55,7 @@ FAVMENU_Init( lastGUI=0, subMenu="", bStandalone=true )
 
 	; for the world
 	Favmenu_title	   := "FavMenu"
-	Favmenu_version    := "2.17"
+	Favmenu_version    := "4.17"
 	Favmenu_configFile := "Config.ini"
 	
 	;set GUIs
@@ -489,8 +489,7 @@ FavMenu_MenuHandler()
 	StringReplace i, A_ThisMenu, Favmenu_sub, 
 	keys := % FavMenu_command%i%_%j% `
 	Favmenu_mnuCnt := % FavMenu_menuOrder%i%_%j% 
-
-;-- convert environement and pseudovariables
+;-- convert environment and pseudovariables
 	if ( FavMenu_IsPseudoVar(keys) )
 		keys := FavMenu_ConvertPseudoPath(keys)
 	keys := FavMenu_ExpandEnvVars(keys)
@@ -537,7 +536,7 @@ FavMenu_MenuHandler()
 		return
 	}
 
-;-- Remove "cd " (all other commands start with this word)
+;-- Remove "cd " (all other commands start without this word)
 	StringMid keys, keys, 4
 
 ;-- Check for TC plugins (redirect to system call)

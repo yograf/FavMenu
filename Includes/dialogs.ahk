@@ -6,7 +6,6 @@ FavMenu_DialogGetActive(hw=0)
 {	
 	global 
 	local class, title
-
 	WinGet, Favmenu_dlgHwnd, ID, A
 	WinGetClass, class, ahk_id %Favmenu_dlgHwnd%
 	WinGetTitle, title, ahk_id %Favmenu_dlgHwnd%
@@ -530,10 +529,35 @@ FavMenu_DialogSetPath_TC(path, bTab = false)
 		FavMenu_SendTCCommand(cm_OpenNewTab)
 	
 	WinActivate ahk_class TTOTAL_CMD
+TC_SetPath(path, bTab)
+}
 
-	FavMenu_SendTCCommand(cm_editpath)
-	SendRaw, %path%
-	Send, {ENTER}
+TC_SetPath(pPath, bTab){ 
+	GLOBAL GOTCGO
+	params := "S"
+
+	if (bTab)
+		params .= "T"
+
+	;compile message to TC	 
+	VarSetCapacity(paths, 512, 0)
+	paths := pPath . "`r"
+	Loop, Parse, params
+		InsertInteger( Asc( A_LoopField ), paths, StrLen( paths ) + A_Index, 1)
+
+	;compile copydata
+	VarSetCapacity( sCOPYDATA, 12 ) 
+	InsertInteger( Asc( "C" ) + 256 * Asc( "D" ),			sCOPYDATA,	0 ) 
+	InsertInteger( StrLen( paths )+1 + StrLen(params)+1,	sCOPYDATA,	4 ) 
+	InsertInteger( &paths,									sCOPYDATA,	8 ) 
+	
+	;log this shit
+;	msg := dumpdwords(paths, 96, true), line:="-------------------------------------------------"
+;	msg = %A_HOUR%:%A_SEC% %ppath% %bTab%`n%line%`n%msg% `n
+;	FileAppend, %msg%, FM3.log
+
+	;send the message
+	SendMessage, 0x4A, ,&sCOPYDATA, , ahk_class TTOTAL_CMD		;wm_copydata=0x4a
 }
 
 ;--------------------------------------------------------------------------
