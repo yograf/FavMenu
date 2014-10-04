@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Favmenu by yograf</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/yograf/FavMenu">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Favmenu</h1>
+            <h2></h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/yograf/FavMenu/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/yograf/FavMenu/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a name="favmenu2-patched-version" class="anchor" href="#favmenu2-patched-version"><span class="octicon octicon-link"></span></a>FavMenu2 patched version</h1>
+
+<p>FavMenu2 stores a list of your favorite folders, and let you quickly
+jump to them within system dialogs (Open/Save, Browse For Folder,
+Office2003 dialogs), Console (cmd.exe), Windows Explorer and Total
+Commander.</p>
+
+<p><img src="http://att.newsmth.net/nForum/att/TotalCommander/45716/754" alt="screenshot"></p>
+
+<p>Original Author: Miodrag Milic</p>
+
+<p>Download the orignal version: <a href="http://www.totalcmd.net/plugring/TC_FavMenu2.html">http://www.totalcmd.net/plugring/TC_FavMenu2.html</a></p>
+
+<h2>
+<a name="about-this-fork" class="anchor" href="#about-this-fork"><span class="octicon octicon-link"></span></a>About this fork</h2>
+
+<p>This version has the following enhancements:</p>
+
+<ul>
+<li>Fix support for Total Commander &gt; 7.0</li>
+<li>Add support for GNU Emacs, XEmacs &amp; MicroEmacs-jasspa</li>
+<li>Add support for mintty/rxvt on Cygwin/Msys (only SetPath, no GetPath)</li>
+<li>Add support for explorer &amp; open/save dialog of Windows Vista/7</li>
+<li>Add support for </li>
+<li>Add menu item 'Copy current path'</li>
+<li>Add menu item 'Command Prompt Here'</li>
+<li>For unsupported applications/dialogs, try to parse window title to get
+current path</li>
+</ul><p>If you have any question about this fork, please concat me <a href="http://bitbucket.org/bamanzi">http://bitbucket.org/bamanzi</a></p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="menu-of-your-favorites-folders--applications" class="anchor" href="#menu-of-your-favorites-folders--applications"><span class="octicon octicon-link"></span></a>Menu of your favorites folders &amp; applications</h3>
+
+<p>You can create &amp; edit a menu with Editor.exe. Possible menu items are:</p>
+
+<ul>
+<li>a folder (command: <code>cd &lt;path&gt;</code>  for example: <code>cd D:\Documents</code>)</li>
+<li>executable (command: <code>&lt;path_to_exe&gt;</code> for example: <code>notepad.exe</code> or <code>d:\tools\gfie\gfie.exe</code>)
+(in fact, any file could be added)</li>
+</ul><p>Note that environment variables could be used in command, for example:
+<code>cd %APPDATA%\Google\Chrome</code>.</p>
+
+<p>You can also use Total Commander's Directory Hotlist as the menu, just
+set path of TC's <code>wincmd.ini</code> as FavMenu's menu definition ini file, in
+<code>Setup-&gt;Configuration</code>.  In this case, You can use TC plugin path in the
+command, for example: <code>cd \\\Uninstaller\</code> or <code>cd \\\Registry\HKEY_CURRENT_USER\Sofware</code></p>
+
+<h3>
+<a name="bring-up-the-menu" class="anchor" href="#bring-up-the-menu"><span class="octicon octicon-link"></span></a>Bring up the menu</h3>
+
+<p>When you want to jump to one of your favorite folder, just bring up the
+menu.  To do this, you need to set a system-wide hotkey in
+<code>Setup-&gt;Configuration</code>.</p>
+
+<p>If current application/dialog is supported by FavMenu, it would let the
+application jump to the folder you clicked. Otherwise, it would open
+that folder in the default file manager (which is configurable in
+<code>Setup-&gt;Configuration</code>).</p>
+
+<h3>
+<a name="advanced-usage" class="anchor" href="#advanced-usage"><span class="octicon octicon-link"></span></a>Advanced Usage</h3>
+
+<p><strong>The menu</strong>:</p>
+
+<ul>
+<li>
+<code>Ctrl+Enter</code> on menu item: open properties dialog for the menu item</li>
+<li>
+<code>Shift+Enter</code> on menu item: open selected folder in new tab (if target
+application supports this)</li>
+<li>
+<code>Ctrl+Shift+Enter</code> on menu item: send path of selected item to active window</li>
+</ul><p><strong>Pseudo variables in path</strong>:</p>
+
+<p>FavMenu supports Total Commander's pseudo variables, such as <code>$DESKTOP</code>,
+<code>$PERSONAL</code>, refer <code>Includes/pseudo.ahk</code> for detailed info.</p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/yograf">yograf</a> can be found on <a href="https://github.com/yograf/FavMenu">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
